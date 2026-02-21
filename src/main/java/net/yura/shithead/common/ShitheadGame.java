@@ -20,6 +20,10 @@ import java.util.Set;
  */
 public class ShitheadGame {
 
+    private boolean goLowRuleEnabled = false;
+
+
+
     private Set<Player> playersReady = new HashSet<>();
     private List<Player> players = new ArrayList<>();
     private final Deck deck;
@@ -347,6 +351,9 @@ public class ShitheadGame {
         }
         if (top.getRank() == Rank.TWO) {
             return true;
+        }
+        if (goLowRuleEnabled && top.getRank() == Rank.SEVEN) {
+            return AcesHighCardComparator.getRankValue(rank) < AcesHighCardComparator.getRankValue(top.getRank());
         }
         return AcesHighCardComparator.getRankValue(rank) >= AcesHighCardComparator.getRankValue(top.getRank());
     }
