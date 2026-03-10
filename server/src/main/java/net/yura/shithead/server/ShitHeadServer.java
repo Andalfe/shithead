@@ -97,7 +97,7 @@ public class ShitHeadServer extends AbstractTurnBasedServerGame {
             // TODO there is a new gameFinished that takes a Map of username -> score
             // we may want to keep a full list of game players from the start somewhere to use that
             // we can get a list of all players from the game by getting game.getReadyPlayers()
-            return gameFinished(null); // game.getPlayers().get(0).getName()
+            return gameFinished((String)null); // game.getPlayers().get(0).getName()
         }
         return false;
     }
@@ -154,7 +154,7 @@ public class ShitHeadServer extends AbstractTurnBasedServerGame {
         // TODO BUT maybe its good that we dont kick off any timers before everyone is ready,
         // gives everyone a chance to join the game even if the timeout for turns is small
         else if (game.isFinished()) {
-            gameFinished(null);
+            gameFinished((String)null);
         }
     }
 
@@ -174,7 +174,7 @@ public class ShitHeadServer extends AbstractTurnBasedServerGame {
                 listoner.messageFromGame(mutation, getAllClients());
 
                 if (game.isFinished()) {
-                    gameFinished(null);
+                    gameFinished((String)null);
                 }
                 else {
                     getNextTurn();

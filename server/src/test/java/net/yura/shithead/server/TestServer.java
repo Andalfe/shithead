@@ -4,6 +4,7 @@ import net.yura.lobby.database.Database;
 import net.yura.lobby.database.GameTypeRoom;
 import net.yura.lobby.database.impl.MemoryDatabase;
 import net.yura.lobby.netty.Server;
+import java.util.Optional;
 
 public class TestServer {
 
@@ -17,12 +18,21 @@ public class TestServer {
     public static Server startTestServer(int port) {
         Database db = new MemoryDatabase();
 
-        GameTypeRoom shithead = new GameTypeRoom();
-        shithead.setName(GAME_TYPE_NAME);
-        shithead.setServerClass(ShitHeadServer.class.getName());
-        shithead.setClientClass("not needed");
-
         db.startTransaction();
+        Optional<GameTypeRoom> gameType = db.getGameTypes().stream().filter(gt -> GAME_TYPE_NAME.equals(gt.getName())).findFirst();
+
+        GameTypeRoom shithead;
+        if (gameType.isPresent()) {
+            shithead = gameType.get();
+            shithead.setServerJar(null);
+        }
+        else {
+            shithead = new GameTypeRoom();
+            shithead.setName(GAME_TYPE_NAME);
+            shithead.setServerClass(ShitHeadServer.class.getName());
+            shithead.setClientClass("not needed");
+        }
+
         db.saveGameType(shithead);
         db.endTransaction();
 

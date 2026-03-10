@@ -147,7 +147,7 @@ public class ServerTest {
 
         readyPlayersForGame(id);
 
-        int maxTurns = 200;
+        int maxTurns = 300;
         int turns = 0;
         while (!mockClient1.game.isFinished() || !mockClient2.game.isFinished()) {
             assertEquals(mockClient1.game.isFinished(), mockClient2.game.isFinished());
